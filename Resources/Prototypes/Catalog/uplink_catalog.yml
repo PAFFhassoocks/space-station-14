@@ -2336,9 +2336,9 @@
   productEntity: WeaponSubMachineGunBriefcase
   discountCategory: veryRareDiscounts
   discountDownTo:
-    Telecrystal: 10
+    Telecrystal: 4
   cost:
-    Telecrystal: 15
+    Telecrystal: 8
   categories:
   - UplinkJob
   conditions:
