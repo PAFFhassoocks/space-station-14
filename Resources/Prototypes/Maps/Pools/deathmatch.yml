@@ -2,3 +2,5 @@
   id: DeathMatchMapPool
   maps:
   - CentCommDeathMatch
+#  - MeteorArena
+#  - dm01-entryway , its broken with no lights

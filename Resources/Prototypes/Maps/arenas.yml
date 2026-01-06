@@ -12,6 +12,7 @@
         - type: StationJobs
           availableJobs:
             Passenger: [ -1, -1 ]
+
 - type: gameMap
   id: dm01-entryway
   mapName: DM01 Entryway
@@ -26,15 +27,15 @@
         - type: StationJobs
           availableJobs:
             Passenger: [ -1, -1 ]
+
 - type: gameMap
   id: CentCommDeathMatch
-  isGrid: true # Did you know that centcomm is the only "game map" that isn't actually a map? Send help.
   mapName: 'Central Death Match Command'
-  mapPath: /Maps/centcomm.yml
+  mapPath: /Maps/centcommdeathmatch.yml
   minPlayers: 0
   stations:
     centcomm:
-      stationProto: NanotrasenCentralCommand
+      stationProto: StandardStationArena
       components:
       - type: StationNameSetup
         mapNameTemplate: '{0} Central Command {1}'
