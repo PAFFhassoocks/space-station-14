@@ -30,7 +30,7 @@
 
 - type: gameMap
   id: CentCommDeathMatch
-  isgrid: True # why isnt centcomm a map...?
+  isgrid: true # why isnt centcomm a map...?
   mapName: 'Central Death Match Command'
   mapPath: /Maps/centcommdeathmatch.yml
   minPlayers: 0
@@ -39,10 +39,7 @@
       stationProto: StandardStationArena
       components:
       - type: StationNameSetup
-        mapNameTemplate: '{0} Central Command {1}'
-        nameGenerator:
-          !type:NanotrasenNameGenerator
-          prefixCreator: 'TG'
+        mapNameTemplate: 'Central Command'
       - type: StationJobs
         availableJobs:
           Passenger: [ -1, -1 ]
