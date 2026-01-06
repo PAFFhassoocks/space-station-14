@@ -74,18 +74,6 @@
   - type: DeathMatchRule
     rewardSpawns:
     - id: HealingToolbox
-    - id: ClothingOuterArmorBasicSlim
-      orGroup: loot
-    - id: ClothingHeadHelmetBasic
-      orGroup: loot
-    - id: SoapNT
-      orGroup: loot
-    - id: Bola
-      orGroup: loot
-    - id: Spear
-      orGroup: loot
-    - id: ClothingShoesGaloshes
-      orGroup: loot
     - id: FoodPieBananaCream
       orGroup: loot
     - id: Stimpack
