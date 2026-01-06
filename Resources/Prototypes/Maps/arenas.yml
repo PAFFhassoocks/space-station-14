@@ -30,6 +30,7 @@
 
 - type: gameMap
   id: CentCommDeathMatch
+  isgrid: True # why isnt centcomm a map...?
   mapName: 'Central Death Match Command'
   mapPath: /Maps/centcommdeathmatch.yml
   minPlayers: 0
