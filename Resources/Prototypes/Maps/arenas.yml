@@ -34,7 +34,7 @@
   mapPath: /Maps/Nonstations/centcommdeathmatch.yml
   minPlayers: 0
   stations:
-    centcomm:
+    centcommdeathmatch:
       stationProto: StandardStationArena
       components:
       - type: StationNameSetup
