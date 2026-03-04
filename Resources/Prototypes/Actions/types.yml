@@ -223,6 +223,21 @@
     event: !type:ToggleClothingEvent
 
 - type: entity
+  parent: BaseAction
+  id: ActionToggleShield
+  name: Toggle Shield
+  description: Turn on the shields and become almost indestructible for a while.
+  components:
+  - type: Action
+    itemIconStyle: BigItem
+    useDelay: 45 # equip noise spam.
+    icon:
+      sprite: Objects/Weapons/Melee/e_shield.rsi
+      state: eshield-on
+  - type: InstantAction
+    event: !type:ToggleActionEvent
+
+- type: entity
   parent: BaseMentalAction
   id: ActionCombatModeToggle
   name: "[color=red]Combat Mode[/color]"

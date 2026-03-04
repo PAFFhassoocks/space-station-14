@@ -1,3 +1,4 @@
+using Content.Shared.Actions;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item.ItemToggle.Components;
@@ -19,6 +20,7 @@ namespace Content.Shared.Item.ItemToggle;
 /// </remarks>
 public sealed class ItemToggleSystem : EntitySystem
 {
+    [Dependency] private readonly SharedActionsSystem _actions = null!;
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -43,6 +45,10 @@ public sealed class ItemToggleSystem : EntitySystem
         SubscribeLocalEvent<ItemToggleHotComponent, IsHotEvent>(OnIsHotEvent);
 
         SubscribeLocalEvent<ItemToggleActiveSoundComponent, ItemToggledEvent>(UpdateActiveSound);
+
+        SubscribeLocalEvent<ItemToggleByActionComponent, MapInitEvent>(OnToggleByActionMapInit);
+        SubscribeLocalEvent<ItemToggleByActionComponent, GetItemActionsEvent>(OnGetActions);
+        SubscribeLocalEvent<ItemToggleByActionComponent, ToggleActionEvent>(OnToggleAction);
     }
 
     private void OnStartup(Entity<ItemToggleComponent> ent, ref ComponentStartup args)
@@ -356,5 +362,26 @@ public sealed class ItemToggleSystem : EntitySystem
             if (stream?.Entity is {} entity)
                 comp.PlayingStream = entity;
         }
+    }
+
+    private void OnToggleByActionMapInit(Entity<ItemToggleByActionComponent> ent, ref MapInitEvent args)
+    {
+        _actions.AddAction(ent, ref ent.Comp.ActionEntity, ent.Comp.Action);
+        _actions.SetToggled(ent.Comp.ActionEntity, IsActivated(ent.Owner));
+        Dirty(ent);
+    }
+
+    private void OnGetActions(Entity<ItemToggleByActionComponent> ent, ref GetItemActionsEvent args)
+    {
+        if (ent.Comp.ActionEntity != null
+            && (args.SlotFlags & ent.Comp.RequiredFlags) == ent.Comp.RequiredFlags)
+        {
+            args.AddAction(ent.Comp.ActionEntity.Value);
+        }
+    }
+
+    private void OnToggleAction(Entity<ItemToggleByActionComponent> ent, ref ToggleActionEvent args)
+    {
+        args.Handled = Toggle(ent.Owner, args.Performer);
     }
 }
