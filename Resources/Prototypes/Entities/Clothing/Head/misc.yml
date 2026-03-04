@@ -233,8 +233,7 @@
     action: ActionBecomeValid
     disableOnUnequip: true
   - type: ComponentToggler
-    parent: true
-    components:
+    parentComponents:
     - type: KillSign
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag

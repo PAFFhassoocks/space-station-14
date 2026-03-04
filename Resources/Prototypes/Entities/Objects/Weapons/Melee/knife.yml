@@ -387,7 +387,7 @@
   components:
   - type: Appearance
   - type: ComponentToggler
-    components:
+    selfComponents:
     - type: Execution
       doAfterDuration: 4.0
     - type: Sharp

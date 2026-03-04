@@ -13,7 +13,7 @@
     activeSound:
       path: /Audio/Weapons/ebladehum.ogg
   - type: ComponentToggler
-    components:
+    selfComponents:
     - type: Sharp
     - type: DisarmMalus
       malus: 0.6
@@ -125,7 +125,7 @@
       params:
         volume: -3
   - type: ComponentToggler
-    components:
+    selfComponents:
     - type: Sharp
     - type: DisarmMalus
       malus: 0.4
@@ -189,7 +189,7 @@
         Slash: 10
         Heat: 10
   - type: ComponentToggler
-    components:
+    selfComponents:
     - type: Sharp
     - type: DisarmMalus
       malus: 0.4
@@ -312,7 +312,7 @@
       params:
         volume: 3
   - type: ComponentToggler
-    components:
+    selfComponents:
     - type: Sharp
     - type: DisarmMalus
       malus: 0.7

@@ -12,27 +12,34 @@ namespace Content.Shared.Item.ItemToggle.Components;
 public sealed partial class ComponentTogglerComponent : Component
 {
     /// <summary>
-    /// The components to add when activated.
-    /// </summary>
-    [DataField(required: true)]
-    public ComponentRegistry Components = new();
-
-    /// <summary>
-    /// The components to remove when deactivated.
-    /// If this is null <see cref="Components"/> is reused.
+    /// The components to add to self when activated.
     /// </summary>
     [DataField]
-    public ComponentRegistry? RemoveComponents;
+    public ComponentRegistry? SelfComponents = new();
 
     /// <summary>
-    /// If true, adds components on the entity's parent instead of the entity itself.
+    /// The components to add to the entity's parent when activated.
     /// </summary>
     [DataField]
-    public bool Parent;
+    public ComponentRegistry? ParentComponents = new();
+
+    /// <summary>
+    /// The components to remove from self when deactivated.
+    /// If this is null <see cref="SelfComponents"/> is reused.
+    /// </summary>
+    [DataField]
+    public ComponentRegistry? RemoveSelfComponents;
+
+    /// <summary>
+    /// The components to remove from the entity's parent when deactivated.
+    /// If this is null <see cref="ParentComponents"/> is reused.
+    /// </summary>
+    [DataField]
+    public ComponentRegistry? RemoveParentComponents;
 
     // <summary>
-    // It holds the entity that the component gave the component to, so it can remove from it even if it changes parent.
+    // It holds the entity's parent that the component gave the component to, so it can remove from it even if it changes parent.
     // </summary>
     [DataField]
-    public EntityUid? Target;
+    public EntityUid? TargetParent;
 }

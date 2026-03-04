@@ -56,7 +56,7 @@
     activatedSize: Large
   - type: ItemToggleHot
   - type: ComponentToggler
-    components:
+    selfComponents:
     - type: DisarmMalus
       malus: 0.6
   - type: ToggleableVisuals
