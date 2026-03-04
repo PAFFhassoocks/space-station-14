@@ -16,7 +16,7 @@
     action: ActionToggleMagboots
     mustEquip: false
   - type: ComponentToggler
-    components:
+    selfComponents:
     - type: NoSlip
   - type: ItemTogglePrefix
     prefixOn: on

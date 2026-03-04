@@ -746,6 +746,25 @@
     damageCoefficient: 0.5
   - type: StaminaResistance
     damageCoefficient: 0.75
+  - type: ItemToggleByAction
+    action: ActionToggleShield
+  - type: ItemToggle
+    onActivate: false
+    onUse: false
+    # soundActivate: # sound to activate here
+    # SoundDeactivate: # sound to deactivate here
+  - type: TemporaryItemToggle
+    toggleDelay: 15
+  - type: ComponentToggler
+    selfComponents:
+    - type: Unremoveable
+    - type: PointLight
+      radius: 2
+      energy: 10.0
+      color: red
+    parentComponents:
+    - type: SpriteOverlay
+      # sprite: # custom shield sprite here
   - type: Armor
     modifiers:
       coefficients:
@@ -755,6 +774,15 @@
         Heat: 0.65
         Radiation: 0.65
         Caustic: 0.65
+  - type: ItemToggleArmor
+    activatedModifiers:
+      coefficients:
+        Blunt: 0.15
+        Slash: 0.15
+        Piercing: 0.15
+        Heat: 0.15
+        Radiation: 0.15
+        Caustic: 0.15
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.9

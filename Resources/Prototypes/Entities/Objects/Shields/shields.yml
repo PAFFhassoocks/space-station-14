@@ -454,7 +454,7 @@
     - type: ItemToggleSize
       activatedSize: Huge
     - type: ComponentToggler
-      components:
+      selfComponents:
       - type: DisarmMalus
         malus: 0.6
     - type: Sprite
@@ -568,7 +568,7 @@
         params:
           volume: -5
     - type: ComponentToggler
-      components:
+      selfComponents:
       - type: DisarmMalus
         malus: 0.6
     - type: ItemToggleSize

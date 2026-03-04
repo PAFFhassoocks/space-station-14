@@ -18,24 +18,31 @@ public sealed class ComponentTogglerSystem : EntitySystem
     {
         if (args.Activated)
         {
-            var target = ent.Comp.Parent ? Transform(ent).ParentUid : ent.Owner;
+            var parent = Transform(ent).ParentUid;
 
-            if (TerminatingOrDeleted(target))
-                return;
+            if (ent.Comp.SelfComponents != null && !TerminatingOrDeleted(ent))
+            {
+                EntityManager.AddComponents(ent, ent.Comp.SelfComponents);
+            }
 
-            ent.Comp.Target = target;
-
-            EntityManager.AddComponents(target, ent.Comp.Components);
+            if (ent.Comp.ParentComponents != null && !TerminatingOrDeleted(parent))
+            {
+                ent.Comp.TargetParent = parent;
+                EntityManager.AddComponents(parent, ent.Comp.ParentComponents);
+            }
         }
         else
         {
-            if (ent.Comp.Target == null)
-                return;
+            if (!TerminatingOrDeleted(ent) &&
+                (ent.Comp.RemoveSelfComponents != null || ent.Comp.SelfComponents != null))
+                EntityManager.RemoveComponents(ent, ent.Comp.RemoveSelfComponents ?? ent.Comp.SelfComponents!);
 
-            if (TerminatingOrDeleted(ent.Comp.Target.Value))
-                return;
+            var parent = ent.Comp.TargetParent;
 
-            EntityManager.RemoveComponents(ent.Comp.Target.Value, ent.Comp.RemoveComponents ?? ent.Comp.Components);
+            if (parent != null
+                && !TerminatingOrDeleted(parent) &&
+                (ent.Comp.RemoveParentComponents != null || ent.Comp.ParentComponents != null))
+                EntityManager.RemoveComponents(parent.Value, ent.Comp.RemoveParentComponents ?? ent.Comp.ParentComponents!);
         }
     }
 }

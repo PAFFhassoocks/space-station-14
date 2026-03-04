@@ -373,7 +373,7 @@
     radius: 1.5
     color: yellow
   - type: ComponentToggler
-    components:
+    selfComponents:
     - type: DamageOnHolding
       damage:
         types:
@@ -557,7 +557,7 @@
   - type: Item
     sprite: Objects/Tools/Lighters/honkco.rsi
   - type: ComponentToggler # This is super cursed and ends up deleting the fixtures when toggled off
-    components:
+    selfComponents:
     - type: Slippery
     - type: StepTrigger
       intersectRatio: 0.2
@@ -629,7 +629,7 @@
       - meaty
       - cheap
   - type: ComponentToggler
-    components:
+    selfComponents:
     - type: Edible # This shouldn't be component toggler, but doesn't work when it's not
   - type: PointLight
     enabled: false

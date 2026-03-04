@@ -9,8 +9,7 @@
     state: icon
   - type: ItemToggle
   - type: ComponentToggler
-    parent: true
-    components:
+    parentComponents:
     - type: Stealth
       minVisibility: 0.1
       lastVisibility: 0.1
@@ -37,8 +36,7 @@
   description: A device that allows Xenoborgs to go truly invisible.
   components:
   - type: ComponentToggler
-    parent: true
-    components:
+    parentComponents:
     - type: Stealth
       minVisibility: -1
       lastVisibility: -1

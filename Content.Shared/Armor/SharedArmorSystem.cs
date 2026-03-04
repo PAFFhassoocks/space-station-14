@@ -3,6 +3,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Inventory;
+using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Silicons.Borgs;
 using Content.Shared.Verbs;
 using Robust.Shared.Utility;
@@ -25,6 +26,8 @@ public abstract class SharedArmorSystem : EntitySystem
         SubscribeLocalEvent<ArmorComponent, InventoryRelayedEvent<DamageModifyEvent>>(OnDamageModify);
         SubscribeLocalEvent<ArmorComponent, BorgModuleRelayedEvent<DamageModifyEvent>>(OnBorgDamageModify);
         SubscribeLocalEvent<ArmorComponent, GetVerbsEvent<ExamineVerb>>(OnArmorVerbExamine);
+
+        SubscribeLocalEvent<ItemToggleArmorComponent, ItemToggledEvent>(OnItemToggle);
     }
 
     /// <summary>
@@ -73,6 +76,31 @@ public abstract class SharedArmorSystem : EntitySystem
         _examine.AddDetailedExamineVerb(args, component, examineMarkup,
             Loc.GetString("armor-examinable-verb-text"), "/Textures/Interface/VerbIcons/dot.svg.192dpi.png",
             Loc.GetString("armor-examinable-verb-message"));
+    }
+
+    public void OnItemToggle(Entity<ItemToggleArmorComponent> ent, ref ItemToggledEvent args)
+    {
+        if (!TryComp<ArmorComponent>(ent, out var armorComp))
+            return;
+
+        if (args.Activated)
+        {
+            if (ent.Comp.ActivatedModifiers == null)
+                return;
+
+            ent.Comp.DeactivatedModifiers ??= armorComp.Modifiers;
+            armorComp.Modifiers = ent.Comp.ActivatedModifiers;
+        }
+        else
+        {
+            if (ent.Comp.DeactivatedModifiers == null)
+                return;
+
+            ent.Comp.ActivatedModifiers ??= armorComp.Modifiers;
+            armorComp.Modifiers = ent.Comp.DeactivatedModifiers;
+        }
+
+        DirtyField(ent, armorComp, nameof(ArmorComponent.Modifiers));
     }
 
     private FormattedMessage GetArmorExamine(DamageModifierSet armorModifiers)

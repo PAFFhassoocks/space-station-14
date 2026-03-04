@@ -173,8 +173,7 @@
     action: ActionTogglePhaseCloak
     disableOnUnequip: true
   - type: ComponentToggler
-    parent: true
-    components:
+    parentComponents:
     - type: Stealth
       minVisibility: 0.1
       lastVisibility: 0.1

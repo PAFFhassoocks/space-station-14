@@ -1,3 +1,4 @@
+using Content.Shared.Actions;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item.ItemToggle.Components;
@@ -9,6 +10,7 @@ using Content.Shared.Wieldable;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Item.ItemToggle;
 /// <summary>
@@ -19,10 +21,12 @@ namespace Content.Shared.Item.ItemToggle;
 /// </remarks>
 public sealed class ItemToggleSystem : EntitySystem
 {
+    [Dependency] private readonly SharedActionsSystem _actions = null!;
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly IGameTiming _timing = null!;
 
     private EntityQuery<ItemToggleComponent> _query;
 
@@ -43,6 +47,12 @@ public sealed class ItemToggleSystem : EntitySystem
         SubscribeLocalEvent<ItemToggleHotComponent, IsHotEvent>(OnIsHotEvent);
 
         SubscribeLocalEvent<ItemToggleActiveSoundComponent, ItemToggledEvent>(UpdateActiveSound);
+
+        SubscribeLocalEvent<ItemToggleByActionComponent, MapInitEvent>(OnToggleByActionMapInit);
+        SubscribeLocalEvent<ItemToggleByActionComponent, GetItemActionsEvent>(OnGetActions);
+        SubscribeLocalEvent<ItemToggleByActionComponent, ToggleActionEvent>(OnToggleAction);
+
+        SubscribeLocalEvent<TemporaryItemToggleComponent, ItemToggledEvent>(OnToggle);
     }
 
     private void OnStartup(Entity<ItemToggleComponent> ent, ref ComponentStartup args)
@@ -355,6 +365,51 @@ public sealed class ItemToggleSystem : EntitySystem
                 : _audio.PlayPvs(comp.ActiveSound, uid, loop);
             if (stream?.Entity is {} entity)
                 comp.PlayingStream = entity;
+        }
+    }
+
+    private void OnToggleByActionMapInit(Entity<ItemToggleByActionComponent> ent, ref MapInitEvent args)
+    {
+        _actions.AddAction(ent, ref ent.Comp.ActionEntity, ent.Comp.Action);
+        _actions.SetToggled(ent.Comp.ActionEntity, IsActivated(ent.Owner));
+        Dirty(ent);
+    }
+
+    private void OnGetActions(Entity<ItemToggleByActionComponent> ent, ref GetItemActionsEvent args)
+    {
+        if (ent.Comp.ActionEntity != null
+            && (args.SlotFlags & ent.Comp.RequiredFlags) == ent.Comp.RequiredFlags)
+        {
+            args.AddAction(ent.Comp.ActionEntity.Value);
+        }
+    }
+
+    private void OnToggleAction(Entity<ItemToggleByActionComponent> ent, ref ToggleActionEvent args)
+    {
+        args.Handled = Toggle(ent.Owner, args.Performer);
+    }
+
+    private void OnToggle(Entity<TemporaryItemToggleComponent> ent, ref ItemToggledEvent args)
+    {
+        ent.Comp.NextToggleTime = _timing.CurTime + ent.Comp.ToggleDelay;
+        Dirty(ent);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var curTime = _timing.CurTime;
+        var enumerator = EntityQueryEnumerator<TemporaryItemToggleComponent>();
+        while (enumerator.MoveNext(out var uid, out var component))
+        {
+            if (component.NextToggleTime == null || curTime < component.NextToggleTime)
+                continue;
+
+            Toggle(uid);
+            component.NextToggleTime = null;
+            /* make sure to set the next toggle time to null after toggle to avoid
+            a infinite toggle and untoggle loop */
         }
     }
 }
