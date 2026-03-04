@@ -751,6 +751,9 @@
   - type: ItemToggle
     onActivate: false
     onUse: false
+  - type: ComponentToggler
+    components:
+    - type: Unremoveable
   - type: Armor
     modifiers:
       coefficients:
