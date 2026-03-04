@@ -758,6 +758,10 @@
   - type: ComponentToggler
     components:
     - type: Unremoveable
+    - type: PointLight
+      radius: 2
+      energy: 10.0
+      color: green
   - type: Armor
     modifiers:
       coefficients:
