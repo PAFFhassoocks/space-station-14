@@ -751,6 +751,8 @@
   - type: ItemToggle
     onActivate: false
     onUse: false
+    # soundActivate: # sound to activate here
+    # SoundDeactivate: # sound to deactivate here
   - type: ComponentToggler
     components:
     - type: Unremoveable
