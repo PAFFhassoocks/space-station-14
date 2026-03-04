@@ -753,6 +753,8 @@
     onUse: false
     # soundActivate: # sound to activate here
     # SoundDeactivate: # sound to deactivate here
+  - type: TemporaryItemToggle
+    toggleDelay: 15
   - type: ComponentToggler
     components:
     - type: Unremoveable
