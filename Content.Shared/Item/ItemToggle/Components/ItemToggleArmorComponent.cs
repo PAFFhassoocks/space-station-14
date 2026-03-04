@@ -3,6 +3,9 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Item.ItemToggle.Components;
 
+/// <summary>
+/// Handles the changes to the armor component when the item is toggled.
+/// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class ItemToggleArmorComponent : Component
 {
