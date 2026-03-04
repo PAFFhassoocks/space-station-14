@@ -759,21 +759,21 @@
   - type: Armor
     modifiers:
       coefficients:
+        Blunt: 0.65
+        Slash: 0.65
+        Piercing: 0.65
+        Heat: 0.65
+        Radiation: 0.65
+        Caustic: 0.65
+  - type: ItemToggleArmor
+    activatedModifiers:
+      coefficients:
         Blunt: 0.15
         Slash: 0.15
         Piercing: 0.15
         Heat: 0.15
         Radiation: 0.15
         Caustic: 0.15
-  - type: ItemToggleArmor
-    activatedModifiers:
-      coefficients:
-        Blunt: 0.9
-        Slash: 0.9
-        Piercing: 0.9
-        Heat: 0.9
-        Radiation: 0.9
-        Caustic: 0.9
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.9
