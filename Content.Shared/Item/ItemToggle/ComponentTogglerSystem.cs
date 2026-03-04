@@ -20,7 +20,7 @@ public sealed class ComponentTogglerSystem : EntitySystem
         {
             var parent = Transform(ent).ParentUid;
 
-            if (ent.Comp.SelfComponents != null && TerminatingOrDeleted(ent))
+            if (ent.Comp.SelfComponents != null && !TerminatingOrDeleted(ent))
             {
                 EntityManager.AddComponents(ent, ent.Comp.SelfComponents);
             }
@@ -33,7 +33,8 @@ public sealed class ComponentTogglerSystem : EntitySystem
         }
         else
         {
-            if (ent.Comp.RemoveSelfComponents != null || ent.Comp.SelfComponents != null)
+            if (!TerminatingOrDeleted(ent) &&
+                (ent.Comp.RemoveSelfComponents != null || ent.Comp.SelfComponents != null))
                 EntityManager.RemoveComponents(ent, ent.Comp.RemoveSelfComponents ?? ent.Comp.SelfComponents!);
 
             var parent = ent.Comp.TargetParent;
