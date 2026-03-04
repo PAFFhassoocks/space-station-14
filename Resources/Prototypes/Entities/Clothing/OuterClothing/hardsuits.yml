@@ -762,6 +762,8 @@
       radius: 2
       energy: 10.0
       color: green
+    - type: SpriteOverlay
+      # sprite: # custom shield sprite here
   - type: Armor
     modifiers:
       coefficients:
