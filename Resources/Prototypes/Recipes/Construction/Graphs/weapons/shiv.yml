@@ -169,3 +169,47 @@
         doAfter: 1
   - node: icon
     entity: UraniumShiv
+
+- type: constructionGraph
+  id: HardlightShivConstruct
+  start: start
+  graph:
+  - node: start
+    entity: ShardGlassHardlight
+    edges:
+    - to: icon
+      completed:
+      - !type:AdminLog # is this necessary?
+        message: "Construction"
+        impact: High
+      steps:
+      - material: Cloth
+        amount: 1
+        doAfter: 1
+  - node: icon
+    entity: HardlightShiv
+
+- type: constructionGraph
+  id: HardlightShiv
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: icon
+      completed:
+      - !type:AdminLog
+        message: "Construction"
+        impact: High
+      steps:
+      - tag: HardlightGlassShard
+        name: construction-graph-tag-hardlight-glass-shard
+        icon:
+          sprite: Objects/Materials/Shards/shard.rsi
+          state: shard1
+        doAfter: 1
+      - material: Cloth
+        amount: 1
+        doAfter: 1
+  - node: icon
+    entity: HardlightShiv
+

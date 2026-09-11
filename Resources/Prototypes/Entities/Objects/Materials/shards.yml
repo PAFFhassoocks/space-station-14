@@ -235,3 +235,48 @@
         Quantity: 5
       - ReagentId: Brass
         Quantity: 5
+
+- type: entity
+  parent: ShardBase
+  id: ShardGlassHardlight
+  name: hardlight glass shard
+  description: A small piece of glassed hardlight.
+  components:
+  - type: Sprite
+    color: "#800000"
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 5
+        Heat: 5
+  - type: Slippery
+  slipSound:
+    path: /Audio/Weapons/eblade1.ogg
+      params:
+        variation: 0.250
+        pitch: 1.5
+  - type: DamageOnTrigger
+    damage:
+      types:
+        Piercing: 5
+        Heat: 5
+  - type: Tag
+    tags:
+    - GlassShard
+    - Trash
+  - type: Solution
+    solution:
+      reagents: # flavor, eshield drops this when its forced to recharge, these reagents canonically come from the user and bullets/knifes and lasers etc...
+      - ReagentId: Silicon
+        Quantity: 5
+      - ReagentId: Iron
+        Quantity: 2
+      - ReagentId: Carbon
+        Quantity: 1
+      - ReagentId: Ash
+        Quantity: 1
+      - ReagentId: Blood
+        Quantity: 1
+  - type: Construction
+    graph: HardlightShivConstruct
+    node: start
