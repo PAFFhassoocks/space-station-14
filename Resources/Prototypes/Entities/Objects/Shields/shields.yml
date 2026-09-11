@@ -331,7 +331,7 @@
   name: energy shield
   parent: [BaseItem, BaseSyndicateContraband]
   id: EnergyShield
-  description: Exotic energy shield, when folded, can even fit in your pocket.
+  description: An exotic energy shield that, when folded, can even fit in your pocket.
   components:
     - type: ItemToggleExaminableStatus
     - type: ItemToggle
@@ -387,13 +387,11 @@
         - Energy
     - type: Blocking
       passiveBlockModifier:
-        coefficients:
-          Heat: 0.5
-        flatReductions:
-          Blunt: 5
-          Piercing: 10
-          Slash: 5
-          Heat: 25
+        flatReductions: # reduced brute from 5 (piercing at 10) to 3, heat from 25 to 15 since 25 is unachievably high. removed heat coefficient as it made the inspect hard to understand, its useless with reflect anyway.
+          Blunt: 3
+          Piercing: 3
+          Slash: 3
+          Heat: 15
     - type: Appearance
     - type: Damageable
     - type: Injurable
@@ -404,10 +402,10 @@
       thresholds:
       - trigger:
           !type:DamageTrigger
-          damage: 125
+          damage: 175
         behaviors:
         - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+          #acts: [ "Destruction" ]
         - !type:PlaySoundBehavior
           sound:
             collection: GlassBreak
